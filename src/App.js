@@ -30,9 +30,8 @@ function App() {
  
   const DownloadBackground = props => {
     
-    // Component combining the Download Button w/ the downloading apparatus (Hidden canvas and a tag)
+    // Component combining the Download Button with the downloading apparatus (Hidden canvas and a tag)
     // This way the shouldDownload state re-renders only the necessary things
-
     const [shouldDownload, setShouldDownload] = useState(false);
 
     const canvasRef = useRef(null);
