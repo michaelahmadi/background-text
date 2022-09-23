@@ -49,7 +49,7 @@ function App() {
       ctx.font = '54px serif';
       ctx.fillStyle = 'black';
       ctx.textAlign = 'center';
-      ctx.fillText('boo-ya', 1920/2, 1080/2);
+      ctx.fillText('test-text', 1920/2, 1080/2);
 
       aRef.current.href = canvasRef.current.toDataURL("image/png");
       aRef.current.download = "back.png";
