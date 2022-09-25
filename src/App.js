@@ -22,7 +22,7 @@ function App() {
       ctx.font = scaledFont + 'px serif';
       ctx.fillStyle = 'black';
       ctx.textAlign = 'center';
-      ctx.fillText(props.text, scaledWidth/2, scaledHeight/2);
+      ctx.fillText(backgroundText, scaledWidth/2, scaledHeight/2);
     }, [props]);
 
     return <canvas ref={canvasRef} width={props.width * (2/3)} height={props.height * (2/3)} style={{border: '1px solid black'}}>Your browser does not support the canvas HTML element.</canvas>;
@@ -38,7 +38,7 @@ function App() {
     const aRef = useRef(null);
 
 
-    function doDownload(canvasRef, aRef, ...props) {
+    function doDownload(canvasRef, aRef) {
       const ctx = canvasRef.current.getContext('2d');
 
       // Draw background
@@ -49,7 +49,7 @@ function App() {
       ctx.font = '54px serif';
       ctx.fillStyle = 'black';
       ctx.textAlign = 'center';
-      ctx.fillText('test-text', 1920/2, 1080/2);
+      ctx.fillText(backgroundText, 1920/2, 1080/2);
 
       aRef.current.href = canvasRef.current.toDataURL("image/png");
       aRef.current.download = "back.png";
@@ -58,16 +58,12 @@ function App() {
 
     // We must do the download inside useEffect because it requires a non-null reference to the <canvas> and <a> elements
     useEffect(() => {
-      
-      console.log("inside download canvas eff");
-
       if(shouldDownload) {
         doDownload(canvasRef, aRef);
         setShouldDownload(false);
       }
     }, [shouldDownload]);
 
-    
     return (
       <div>
         <button onClick={()=>setShouldDownload(true)}>Download</button>
@@ -90,7 +86,7 @@ function App() {
       
       <div>
         <h2>Two-Thirds Scale Display</h2>
-        <DisplayCanvas width={1920} height={1080} text={backgroundText} font={font}/>
+        <DisplayCanvas width={1920} height={1080} font={font}/>
       </div>
     </div>
   );
