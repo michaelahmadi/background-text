@@ -5,15 +5,17 @@ function App() {
   const [backgroundText, setBackgroundText] = useState(""); // The inputted text
   const [font, setFont] = useState(54);
 
+  const TWO_THIRDS = 2/3;
+
   const DisplayCanvas = props => {
 
     const canvasRef = useRef(null);
     
     useEffect(() => {
       const ctx = canvasRef.current.getContext('2d');
-      const scaledWidth = props.width * (2/3);
-      const scaledHeight = props.height * (2/3);
-      const scaledFont = props.font * (2/3);
+      const scaledWidth = props.width * TWO_THIRDS;
+      const scaledHeight = props.height * TWO_THIRDS;
+      const scaledFont = props.font * TWO_THIRDS;
       // Draw background
       ctx.fillStyle = "white";
       ctx.fillRect(0, 0, scaledWidth, scaledHeight);
@@ -25,7 +27,7 @@ function App() {
       ctx.fillText(backgroundText, scaledWidth/2, scaledHeight/2);
     }, [props]);
 
-    return <canvas ref={canvasRef} width={props.width * (2/3)} height={props.height * (2/3)} style={{border: '1px solid black'}}>Your browser does not support the canvas HTML element.</canvas>;
+    return <canvas ref={canvasRef} width={props.width * TWO_THIRDS} height={props.height * TWO_THIRDS} style={{border: '1px solid black'}}>Your browser does not support the canvas HTML element.</canvas>;
   };
  
   const DownloadBackground = props => {
@@ -40,7 +42,6 @@ function App() {
 
     function doDownload(canvasRef, aRef) {
       const ctx = canvasRef.current.getContext('2d');
-
       // Draw background
       ctx.fillStyle = "white";
       ctx.fillRect(0, 0, 1920, 1080);
@@ -51,6 +52,7 @@ function App() {
       ctx.textAlign = 'center';
       ctx.fillText(backgroundText, 1920/2, 1080/2);
 
+      // Create and complete download
       aRef.current.href = canvasRef.current.toDataURL("image/png");
       aRef.current.download = "back.png";
       aRef.current.click();
