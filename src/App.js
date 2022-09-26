@@ -3,25 +3,28 @@ import { useEffect, useState, useRef } from 'react';
 function App() {
 
   const [backgroundText, setBackgroundText] = useState(""); // The inputted text
-  const [dimensions, setDimensions] = useState({width: 1920, height: 1080});
+  const [dimensionString, setDimensionString] = useState('{"width": 1920, "height": 1080}');
   const [font, setFont] = useState(54);
 
   const DimensionDropdown = props => {
+
+    // When an option is chosen, the dimensionString state is set and this component is re-rendered.
+    // In order for the <select> tag to display the currently chosen option post-re-render,
+    // the value property on the <select> tag must be set to a state && must match the value property of an <option> tag.
+    // Since all values are converted to strings, using objects as values will not work properly-
+    // all object values will be converted to '[object object]' and the first such option will be displayed.
+
     const options = [
       { label: '1920x1080', value: '{"width": 1920, "height": 1080}'},
       { label: '1440x900', value: '{"width": 1440, "height": 900}' },
       { label: '1366x768', value: '{"width": 1366, "height": 768}' },
     ];
 
-    const handleChange = (e) => {
-      setDimensions(JSON.parse(e.target.value));
-    }
-
     return (
       <div>
         <label>
           Screen Resolution: 
-          <select value={dimensions} onChange={handleChange}>
+          <select value={dimensionString} onChange={e => setDimensionString(e.target.value)}>
             {options.map((option) => (
               <option key={option.label} value={option.value}>{option.label}</option>
             ))}
@@ -38,6 +41,7 @@ function App() {
     
     useEffect(() => {
       const ctx = canvasRef.current.getContext('2d');
+      const dimensions = JSON.parse(dimensionString);
       const scaledWidth = dimensions.width * TWO_THIRDS;
       const scaledHeight = dimensions.height * TWO_THIRDS;
       const scaledFont = props.font * TWO_THIRDS;
@@ -52,6 +56,7 @@ function App() {
       ctx.fillText(backgroundText, scaledWidth/2, scaledHeight/2);
     }, [props, TWO_THIRDS]);
 
+    const dimensions = JSON.parse(dimensionString);
     return <canvas ref={canvasRef} width={dimensions.width * TWO_THIRDS} height={dimensions.height * TWO_THIRDS} style={{border: '1px solid black'}}>Your browser does not support the canvas HTML element.</canvas>;
   };
  
@@ -67,6 +72,8 @@ function App() {
 
     function doDownload(canvasRef, aRef) {
       const ctx = canvasRef.current.getContext('2d');
+      const dimensions = JSON.parse(dimensionString);
+
       // Draw background
       ctx.fillStyle = "white";
       ctx.fillRect(0, 0, dimensions.width, dimensions.height);
@@ -90,6 +97,7 @@ function App() {
         setShouldDownload(false);
       }
     }, [shouldDownload]);
+    const dimensions = JSON.parse(dimensionString);
 
     return (
       <div>
