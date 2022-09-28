@@ -18,6 +18,9 @@ function App() {
       { label: '1920x1080', value: '{"width": 1920, "height": 1080}'},
       { label: '1440x900', value: '{"width": 1440, "height": 900}' },
       { label: '1366x768', value: '{"width": 1366, "height": 768}' },
+      { label: '360×640', value: '{"width": 360, "height": 640}' },
+      { label: '414×896', value: '{"width": 414, "height": 896}' },
+      { label: '375x667', value: '{"width": 375, "height": 667}' },
     ];
 
     return (
