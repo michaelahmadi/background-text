@@ -4,7 +4,24 @@ function App() {
 
   const [backgroundText, setBackgroundText] = useState(""); // The inputted text
   const [dimensionString, setDimensionString] = useState('{"width": 1920, "height": 1080}');
-  const [font, setFont] = useState(54);
+  const [font, setFont] = useState('54');
+
+  function handleFontChange(event) {
+
+    const newFont = event.target.value;
+
+    if(newFont.length < font.length) {
+      // Deletion, not necessary to check input
+      setFont(newFont);
+      return;
+    }
+
+    const c = newFont[newFont.length - 1];
+    if(c >= '0' && c <= '9') {
+      // A numeric character was entered, update state
+      setFont(newFont);
+    } else {} // A non-numeric character was entered, do nothing
+  }
 
   const DimensionDropdown = props => {
 
@@ -47,7 +64,7 @@ function App() {
       const dimensions = JSON.parse(dimensionString);
       const scaledWidth = dimensions.width * TWO_THIRDS;
       const scaledHeight = dimensions.height * TWO_THIRDS;
-      const scaledFont = props.font * TWO_THIRDS;
+      const scaledFont = font * TWO_THIRDS;
       // Draw background
       ctx.fillStyle = "white";
       ctx.fillRect(0, 0, scaledWidth, scaledHeight);
@@ -82,7 +99,7 @@ function App() {
       ctx.fillRect(0, 0, dimensions.width, dimensions.height);
 
       // Draw text
-      ctx.font = '54px serif';
+      ctx.font = font + 'px serif';
       ctx.fillStyle = 'black';
       ctx.textAlign = 'center';
       ctx.fillText(backgroundText, dimensions.width/2, dimensions.height/2);
@@ -118,15 +135,19 @@ function App() {
 
       <label>
         Input Text: 
-        <input type="text" id="inputText" onChange={e => setBackgroundText(e.target.value)}>
+        <input type="text" onChange={e => setBackgroundText(e.target.value)}>
         </input>
       </label>
+      <label>
+          Font Size: 
+          <input type="text" value={font} onChange={handleFontChange}/>
+        </label>
       <DimensionDropdown/>
       <DownloadBackground/>
       
       <div>
         <h2>Two-Thirds Scale Display</h2>
-        <DisplayCanvas font={font}/>
+        <DisplayCanvas/>
       </div>
     </div>
   );
