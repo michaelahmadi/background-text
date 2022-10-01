@@ -4,23 +4,54 @@ function App() {
 
   const [backgroundText, setBackgroundText] = useState(""); // The inputted text
   const [dimensionString, setDimensionString] = useState('{"width": 1920, "height": 1080}');
-  const [font, setFont] = useState('54');
+  const [fontFamily, setFontFamily] = useState('serif');
+  const [fontSize, setFontSize] = useState('54');
 
   function handleFontChange(event) {
 
     const newFont = event.target.value;
 
-    if(newFont.length < font.length) {
+    if(newFont.length < fontSize.length) {
       // Deletion, not necessary to check input
-      setFont(newFont);
+      setFontSize(newFont);
       return;
     }
 
     const c = newFont[newFont.length - 1];
     if(c >= '0' && c <= '9') {
       // A numeric character was entered, update state
-      setFont(newFont);
+      setFontSize(newFont);
     } else {} // A non-numeric character was entered, do nothing
+  }
+
+  const FontDropdown = props => {
+
+    // When an option is chosen, the dimensionString state is set and this component is re-rendered.
+    // In order for the <select> tag to display the currently chosen option post-re-render,
+    // the value property on the <select> tag must be set to a state && must match the value property of an <option> tag.
+    // Since all values are converted to strings, using objects as values will not work properly-
+    // all object values will be converted to '[object object]' and the first such option will be displayed.
+
+    const options = [
+      { label: 'serif', value: 'serif'},
+      { label: 'sans-serif', value: 'sans-serif' },
+      { label: 'Arial', value: 'Arial' },
+      { label: 'Courier New', value: 'Courier New' },
+      { label: 'Times New Roman', value: 'Times New Roman' },
+    ];
+
+    return (
+      <div>
+        <label>
+          Font Family: 
+          <select value={fontFamily} onChange={e => setFontFamily(e.target.value)}>
+            {options.map((option) => (
+              <option key={option.label} value={option.value}>{option.label}</option>
+            ))}
+          </select>
+        </label>
+      </div>
+    )
   }
 
   const DimensionDropdown = props => {
@@ -64,13 +95,13 @@ function App() {
       const dimensions = JSON.parse(dimensionString);
       const scaledWidth = dimensions.width * TWO_THIRDS;
       const scaledHeight = dimensions.height * TWO_THIRDS;
-      const scaledFont = font * TWO_THIRDS;
+      const scaledFont = fontSize * TWO_THIRDS;
       // Draw background
       ctx.fillStyle = "white";
       ctx.fillRect(0, 0, scaledWidth, scaledHeight);
 
       // Draw text
-      ctx.font = scaledFont + 'px serif';
+      ctx.font = scaledFont + 'px ' + fontFamily;
       ctx.fillStyle = 'black';
       ctx.textAlign = 'center';
       ctx.fillText(backgroundText, scaledWidth/2, scaledHeight/2);
@@ -99,7 +130,7 @@ function App() {
       ctx.fillRect(0, 0, dimensions.width, dimensions.height);
 
       // Draw text
-      ctx.font = font + 'px serif';
+      ctx.font = fontSize + 'px ' + fontFamily;
       ctx.fillStyle = 'black';
       ctx.textAlign = 'center';
       ctx.fillText(backgroundText, dimensions.width/2, dimensions.height/2);
@@ -138,10 +169,12 @@ function App() {
         <input type="text" onChange={e => setBackgroundText(e.target.value)}>
         </input>
       </label>
+      
       <label>
           Font Size: 
-          <input type="text" value={font} onChange={handleFontChange}/>
+          <input type="text" value={fontSize} onChange={handleFontChange}/>
         </label>
+      <FontDropdown/>
       <DimensionDropdown/>
       <DownloadBackground/>
       
