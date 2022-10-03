@@ -104,7 +104,10 @@ function App() {
       ctx.font = scaledFont + 'px ' + fontFamily;
       ctx.fillStyle = 'black';
       ctx.textAlign = 'center';
+      // Deal with new line characters
       ctx.fillText(backgroundText, scaledWidth/2, scaledHeight/2);
+
+
     }, [props, TWO_THIRDS]);
 
     const dimensions = JSON.parse(dimensionString);
@@ -133,6 +136,7 @@ function App() {
       ctx.font = fontSize + 'px ' + fontFamily;
       ctx.fillStyle = 'black';
       ctx.textAlign = 'center';
+
       ctx.fillText(backgroundText, dimensions.width/2, dimensions.height/2);
 
       // Create and complete download
