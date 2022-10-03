@@ -166,8 +166,7 @@ function App() {
 
       <label>
         Input Text: 
-        <input type="text" onChange={e => setBackgroundText(e.target.value)}>
-        </input>
+        <textarea type="text" value={backgroundText} onChange={e => setBackgroundText(e.target.value)}/>
       </label>
       
       <label>
