@@ -106,7 +106,10 @@ function App() {
       ctx.textAlign = 'center';
       
       // Deal with new line characters
-      ctx.fillText(backgroundText, scaledWidth/2, scaledHeight/2);
+      const lines = backgroundText.split('\n');
+      for(let i = 0; i < lines.length; i++) {
+        ctx.fillText(lines[i], scaledWidth/2, scaledHeight/2 + (i * scaledFont));
+      }
 
 
     }, [props, TWO_THIRDS]);
@@ -138,7 +141,11 @@ function App() {
       ctx.fillStyle = 'black';
       ctx.textAlign = 'center';
 
-      ctx.fillText(backgroundText, dimensions.width/2, dimensions.height/2);
+      // Deal with new line characters
+      const lines = backgroundText.split('\n');
+      for(let i = 0; i < lines.length; i++) {
+        ctx.fillText(lines[i], dimensions.width/2, dimensions.height/2 + (i * fontSize));
+      }
 
       // Create and complete download
       aRef.current.href = canvasRef.current.toDataURL("image/png");
