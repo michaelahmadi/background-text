@@ -104,6 +104,7 @@ function App() {
       ctx.font = scaledFont + 'px ' + fontFamily;
       ctx.fillStyle = 'black';
       ctx.textAlign = 'center';
+      
       // Deal with new line characters
       ctx.fillText(backgroundText, scaledWidth/2, scaledHeight/2);
 
