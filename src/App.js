@@ -6,6 +6,7 @@ function App() {
   const [dimensionString, setDimensionString] = useState('{"width": 1920, "height": 1080}');
   const [fontFamily, setFontFamily] = useState('serif');
   const [fontSize, setFontSize] = useState(54);
+  const [textHeight, setTextHeight] = useState(540);
 
   const FontDropdown = props => {
 
@@ -78,6 +79,7 @@ function App() {
       const dimensions = JSON.parse(dimensionString);
       const scaledWidth = dimensions.width * TWO_THIRDS;
       const scaledHeight = dimensions.height * TWO_THIRDS;
+      const scaledTextHeight = textHeight * TWO_THIRDS;
       const scaledFont = fontSize * TWO_THIRDS;
       // Draw background
       ctx.fillStyle = "white";
@@ -91,7 +93,7 @@ function App() {
       // Deal with new line characters
       const lines = backgroundText.split('\n');
       for(let i = 0; i < lines.length; i++) {
-        ctx.fillText(lines[i], scaledWidth/2, scaledHeight/2 + (i * scaledFont));
+        ctx.fillText(lines[i], scaledWidth/2, scaledTextHeight + (i * scaledFont));
       }
 
 
@@ -127,7 +129,7 @@ function App() {
       // Deal with new line characters
       const lines = backgroundText.split('\n');
       for(let i = 0; i < lines.length; i++) {
-        ctx.fillText(lines[i], dimensions.width/2, dimensions.height/2 + (i * fontSize));
+        ctx.fillText(lines[i], dimensions.width/2, textHeight + (i * fontSize));
       }
 
       // Create and complete download
@@ -165,11 +167,18 @@ function App() {
       <div>
         <label>
           Font Size: 
-          <input type="number" value={fontSize} onChange={e => setFontSize(e.target.value)}/>
+          <input type="number" value={fontSize} onChange={e => setFontSize(parseFloat(e.target.value))}/>
         </label>
       </div>
       <FontDropdown/>
       <DimensionDropdown/>
+      <div>
+        <label>
+          Text Height: 
+          <input type="number" value={textHeight} onChange={e => setTextHeight(parseFloat(e.target.value))}/>
+        </label>
+      </div>
+
       <DownloadBackground/>
       
       <div>
