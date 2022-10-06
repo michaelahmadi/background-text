@@ -163,11 +163,11 @@ function App() {
         <textarea type="text" value={backgroundText} onChange={e => setBackgroundText(e.target.value)}/>
       </label>
       <div>
-      <label>
+        <label>
           Font Size: 
           <input type="number" value={fontSize} onChange={e => setFontSize(e.target.value)}/>
         </label>
-        </div>
+      </div>
       <FontDropdown/>
       <DimensionDropdown/>
       <DownloadBackground/>
