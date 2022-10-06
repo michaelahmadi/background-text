@@ -5,24 +5,7 @@ function App() {
   const [backgroundText, setBackgroundText] = useState(""); // The inputted text
   const [dimensionString, setDimensionString] = useState('{"width": 1920, "height": 1080}');
   const [fontFamily, setFontFamily] = useState('serif');
-  const [fontSize, setFontSize] = useState('54');
-
-  function handleFontChange(event) {
-
-    const newFont = event.target.value;
-
-    if(newFont.length < fontSize.length) {
-      // Deletion, not necessary to check input
-      setFontSize(newFont);
-      return;
-    }
-
-    const c = newFont[newFont.length - 1];
-    if(c >= '0' && c <= '9') {
-      // A numeric character was entered, update state
-      setFontSize(newFont);
-    } else {} // A non-numeric character was entered, do nothing
-  }
+  const [fontSize, setFontSize] = useState(54);
 
   const FontDropdown = props => {
 
@@ -175,16 +158,16 @@ function App() {
   return (
     <div className="App" style={{textAlign: 'center'}}>
 
-
       <label>
         Input Text: 
         <textarea type="text" value={backgroundText} onChange={e => setBackgroundText(e.target.value)}/>
       </label>
-      
+      <div>
       <label>
           Font Size: 
-          <input type="text" value={fontSize} onChange={handleFontChange}/>
+          <input type="number" value={fontSize} onChange={e => setFontSize(e.target.value)}/>
         </label>
+        </div>
       <FontDropdown/>
       <DimensionDropdown/>
       <DownloadBackground/>
