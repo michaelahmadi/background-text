@@ -55,11 +55,20 @@ function App() {
       { label: '375x667', value: '{"width": 375, "height": 667}' },
     ];
 
+    function handleChange(event) {
+      // We need to update the dimensionString state and the textHeight state
+      const dimString = event.target.value;
+      const height = parseInt(dimString.slice(dimString.lastIndexOf(' ') + 1, dimString.length - 1));
+
+      setDimensionString(dimString);
+      setTextHeight(height / 2);
+    }
+
     return (
       <div>
         <label>
           Screen Resolution: 
-          <select value={dimensionString} onChange={e => setDimensionString(e.target.value)}>
+          <select value={dimensionString} onChange={handleChange}>
             {options.map((option) => (
               <option key={option.label} value={option.value}>{option.label}</option>
             ))}
