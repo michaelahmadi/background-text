@@ -167,11 +167,11 @@ function App() {
   }
 
   return (
-    <div className="App" style={{textAlign: 'center'}}>
+    <div className="App" style={{textAlign: 'center', fontSize: 20}}>
 
       <label>
         Input Text: 
-        <textarea type="text" value={backgroundText} onChange={e => setBackgroundText(e.target.value)}/>
+        <textarea type="text" value={backgroundText} style={{fontFamily: fontFamily, fontSize: 'inherit'}} onChange={e => setBackgroundText(e.target.value)}/>
       </label>
       <div>
         <label>
