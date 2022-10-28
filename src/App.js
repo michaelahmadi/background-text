@@ -175,7 +175,7 @@ function App() {
       </label>
       <div>
         <label>
-          Font Size: 
+          Font Size:
           <input type="number" value={fontSize} onChange={e => setFontSize(parseFloat(e.target.value))}/>
         </label>
       </div>
